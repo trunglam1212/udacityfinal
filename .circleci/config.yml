@@ -24,7 +24,9 @@ jobs:
       - run:
           name: Apply k8s manifests
           command: |
-            kubectl apply -f k8s-manifests/eks-app.yml
+            kubectl apply -f k8s-manifests/backend-deployment.yml
+            kubectl apply -f k8s-manifests/backend-service.yml
+            kubectl expose deployment backend --type=LoadBalancer --name=publicbackend
 
   build:
     docker:
