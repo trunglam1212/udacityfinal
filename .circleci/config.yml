@@ -1,16 +1,17 @@
 version: 2
-executors:
-  eks-executor:
-    docker:
-      - image: amazon/aws-cli:2.x
 
 jobs:
   deploy_to_eks:
-    executor: eks-executor
+    docker:
+      - image: amazon/aws-cli:2.x
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 20.10.8
+      - run:
+          name: AWS CLI Command
+          command: |
+            aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+            aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+            aws s3 ls  # Thực hiện các lệnh AWS CLI tại đây
       - run:
           name: Apply k8s manifests
           command: |
