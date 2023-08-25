@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template to create an Amazon EKS cluster with a nodegroup
+
+Resources:
+  MyVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: "10.0.0.0/16"
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: MyVPC
+
+  MySubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: "10.0.0.0/24"
+      AvailabilityZone: us-east-1a
+      Tags:
+        - Key: Name
+          Value: MySubnet1
+
+  MySubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: "10.0.1.0/24"
+      AvailabilityZone: us-east-1b
+      Tags:
+        - Key: Name
+          Value: MySubnet2
+
+  MyEKSCluster1:
+    Type: AWS::EKS::Cluster
+    Properties:
+      Name: MyEKSCluster1
+      RoleArn: arn:aws:iam::696902546467:role/eksClusterRole
+      ResourcesVpcConfig:
+        SecurityGroupIds:
+          - !GetAtt MyVPC.DefaultSecurityGroup
+        SubnetIds:
+          - !Ref MySubnet1
+          - !Ref MySubnet2
+
+
+Outputs:
+  ClusterName:
+    Description: Name of the EKS cluster
+    Value: !Ref MyEKSCluster1
