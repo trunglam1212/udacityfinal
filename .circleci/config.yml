@@ -9,6 +9,9 @@ jobs:
       - run:
           name: AWS CLI Command
           command: |
+            cat $AWS_ACCESS_KEY_ID
+            cat $AWS_SECRET_ACCESS_KEY
+            cat $AWS_SESSION_TOKEN
             aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
             aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
             aws configure set aws_session_token $AWS_SESSION_TOKEN
