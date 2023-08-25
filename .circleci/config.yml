@@ -12,10 +12,9 @@ jobs:
       - setup_remote_docker:
           version: 20.10.8
       - run:
-          name: Authenticate with EKS and Docker Hub
+          name: Apply k8s manifests
           command: |
-            aws eks update-kubeconfig --name MyEKSCluster1 --region us-east-1
-            echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            kubectl apply -f k8s-manifests/eks-app.yml
 
   build:
     docker:
