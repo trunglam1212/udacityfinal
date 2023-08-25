@@ -3,7 +3,7 @@ version: 2
 jobs:
   deploy_to_eks:
     docker:
-      - image: amazon/aws-cli:2.x
+      - image: amazon/aws-cli:2.4
     steps:
       - checkout
       - run:
