@@ -13,6 +13,11 @@ jobs:
             aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
             aws s3 ls  # Thực hiện các lệnh AWS CLI tại đây
       - run:
+          name: Authenticate with EKS and Docker Hub
+          command: |
+            aws eks update-kubeconfig --name MyEKSCluster1 --region us-east-1
+            echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+      - run:
           name: Apply k8s manifests
           command: |
             kubectl apply -f k8s-manifests/eks-app.yml
@@ -58,6 +63,8 @@ workflows:
     jobs:
       - build
       - deploy_to_eks:
+          requires:
+            - build
           context:
             - aws-secrets
             - docker-secrets
