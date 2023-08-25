@@ -16,10 +16,6 @@ jobs:
           command: |
             aws eks update-kubeconfig --name MyEKSCluster1 --region us-east-1
             echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-      - run:
-          name: Apply k8s manifests
-          command: |
-            kubectl apply -f k8s-manifests/eks-app.yml
 
   build:
     docker:
