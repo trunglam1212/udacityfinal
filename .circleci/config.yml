@@ -23,7 +23,7 @@ jobs:
           command: |
             kubectl apply -f k8s-manifests/backend-deployment.yaml
             kubectl apply -f k8s-manifests/backend-service.yaml
-            kubectl expose deployment backend --type=LoadBalancer --name=publicbackend
+            kubectl expose deployment backend-deployment --type=LoadBalancer --name=publicbackend
             kubectl get pods
             kubectl get services
 
