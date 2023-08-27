@@ -21,9 +21,11 @@ jobs:
       - run:
           name: Apply k8s manifests
           command: |
-            kubectl apply -f k8s-manifests/backend-deployment.yml
-            kubectl apply -f k8s-manifests/backend-service.yml
+            kubectl apply -f k8s-manifests/backend-deployment.yaml
+            kubectl apply -f k8s-manifests/backend-service.yaml
             kubectl expose deployment backend --type=LoadBalancer --name=publicbackend
+            kubectl get pods
+            kubectl get services
 
   build:
     docker:
