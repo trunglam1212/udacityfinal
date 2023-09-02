@@ -16,14 +16,14 @@ jobs:
       - run:
           name: Authenticate with EKS and Docker Hub
           command: |
-            aws eks update-kubeconfig --name MyEKSCluster1 --region us-east-1
+            aws eks update-kubeconfig --name MyCluser3 --region us-east-1
             echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
       - run:
           name: Apply k8s manifests
           command: |
-            kubectl apply -f k8s-manifests/backend-deployment.yaml
-            kubectl apply -f k8s-manifests/backend-service.yaml
-            kubectl expose deployment backend-deployment --type=LoadBalancer --name=publicbackend
+            kubectl apply -f k8s-manifests/deployment.yaml
+            kubectl apply -f k8s-manifests/services.yml
+            sleep 120
             kubectl get pods
             kubectl get services
 
