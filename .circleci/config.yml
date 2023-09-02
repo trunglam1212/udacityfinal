@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Apply k8s manifests
           command: |
-            kubectl apply -f k8s-manifests/deployment.yaml
+            kubectl apply -f k8s-manifests/deployment.yml
             kubectl apply -f k8s-manifests/services.yml
             sleep 120
             kubectl get pods
